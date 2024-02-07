@@ -25,7 +25,7 @@ export const Login = async (req: Request, res: Response) => {
           });
       }
       
-      const token = generateJWT(users.rows[0].name, email)
+      const token = generateJWT(users.rows[0].name, email, users.rows[0].id)
 
       res.status(201).json({
         message: 'User Login successfully',
@@ -51,10 +51,10 @@ export const Register = async(req: Request, res: Response) => {
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      await db.query('INSERT INTO users(name, password, email, phone_number) VALUES ($1, $2, $3, $4)', 
+      const { rows } = await db.query('INSERT INTO users(name, password, email, phone_number) VALUES ($1, $2, $3, $4) RETURNING id', 
         [name, hashedPassword, email, phone_number])
       
-      const token = generateJWT(name, email)
+      const token = generateJWT(name, email, rows[0].id)
 
       res.status(201).json({
         message: 'User registered successfully',

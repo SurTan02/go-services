@@ -9,7 +9,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-      return res.status(401).json({ message: 'Authentication token is missing' });
+      return res.status(401).json({ message: 'User is not logged in' });
     }
 
     const decoded = jwt.verify(token, secretKey);
@@ -20,10 +20,10 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-export const generateJWT = (name: string, email: string) => {
+export const generateJWT = (name: string, email: string, id: string) => {
   try {
     const accessToken = sign(
-      {name, email},
+      {name, email, id},
       (secretKey),
       { expiresIn: "1h" }
     );
