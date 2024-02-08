@@ -1,81 +1,50 @@
-# Turborepo starter
+# Project Brief: Modular Monolith for Gojek-like Services
+Gojek App is implemented with microservices with (might be) hundred of services such as:
+User Service, GoFood, GoPay, GoRide, GoMart, GoShop, GoSend, Subscription Service, Reward Service, and etc. 
 
-This is an official starter Turborepo.
+This project aims to replicate key services of Gojek using a Modular Monolith architecture. Unlike the distributed microservices architecture Gojek uses, this project will consolidate core functionalities into a single codebase, making it easier to manage and develop in the initial stages. The focus will be on implementing basic CRUD of User, Payment, and Food services, utilizing Node.js and PostgreSQL, to showcase how modular components can coexist within a monolithic structure.
 
-## Using this example
+<div align="center">
 
-Run the following command:
+  ![Readme Intro](./docs/ERD.png)
 
-```sh
-npx create-turbo@latest
+</div>
+
+## Tech Stack
+- Node.js with ExpressJS: For building RESTful APIs.
+- TypeScript: For adding static type definitions to JavaScript, enhancing code quality and understandability.
+- OpenAPI: For documenting the APIs, ensuring they are clear and easy to use.
+- PostgreSQL: As the relational database to store and manage application data.
+- Turborepo: To manage the monorepo setup, ensuring efficient handling of multiple packages within the same repository.
+
+## Getting Started
 ```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
+  git clone <this_repo>
+  cd go-services
+  npm install
+```
+## Development
+Follow these steps to prepare your development environment:
+1. Prepare the Database - Import the database schema and initial data:
+   ```
+     psql -d <db_name> -U <db_username> -f dump.sql
+   ```
+2. Environment Variables - Copy the .env.example to .env and fill in the necessary variables:
+3. Start the Development Server:
+   ```
+     npm run dev
+   ``` 
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `user`: Manages user services such as login and registration.
+- `food`: Handles food services, including restaurant listings and order management.
+- `payment`: Manages payment processing and transactions.
+- `@repo/middlewares`: Contains shared middleware, database connections, and Swagger configurations for API documentation.
+- `@repo/eslint-config`: Includes eslint configurations
+- `@repo/typescript-config`: Houses TypeScript configuration.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+## API Documentation
+API Documenation is separated for each service, can be accessed from
+`<service_url>/docs`
+e.g. User service run in `localhost:3000`, docs can be accessed from `localhost:3000/docs`
