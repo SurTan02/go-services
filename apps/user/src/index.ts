@@ -1,8 +1,10 @@
+import { config } from "@repo/middlewares/config";
 import { createServer } from "./server";
 
-const port = process.env.USER_SERVICE_PORT || 3000;
+const hostname = config.APP_ENDPOINT
+const port = config.USER_SERVICE_PORT;
 const server = createServer();
 
 server.listen(port, () => {
-  console.log(`[USER] running on http://localhost:${port}`);
+  console.log(`[USER] running on ${hostname}:${port}`);
 });

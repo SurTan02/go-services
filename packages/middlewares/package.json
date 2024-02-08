@@ -4,7 +4,9 @@
   "description": "",
   "exports": {
     "./database": "./src/database.ts",
-    "./auth": "./src/auth.ts"
+    "./auth": "./src/auth.ts",
+    "./config": "./src/config.ts",
+    "./swagger": "./src/swagger.ts"
   },
   "dependencies": {
     "express": "^4.17.1",

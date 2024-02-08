@@ -1,8 +1,10 @@
+import { config } from "@repo/middlewares/config";
 import { createServer } from "./server";
 
-const port = process.env.FOOD_SERVICE_PORT || 3001;
+const hostname = config.APP_ENDPOINT
+const port = config.FOOD_SERVICE_PORT;
 const server = createServer();
 
 server.listen(port, () => {
-  console.log(`[FOOD] running on http://localhost:${port}`);
+  console.log(`[FOOD] running on ${hostname}:${port}`);
 });

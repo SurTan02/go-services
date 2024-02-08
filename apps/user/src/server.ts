@@ -2,7 +2,9 @@ import { json, urlencoded } from "body-parser";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import { Login, Register } from "./controller";
+import { router } from "./routes/routes";
+import swaggerDocs from "@repo/middlewares/swagger";
+import { config } from "@repo/middlewares/config";
 
 export const createServer = () => {
   const app = express();
@@ -15,8 +17,8 @@ export const createServer = () => {
     .get("/healthz", (req, res) => {
       return res.json({ ok: true });
     });
-
-  app.post("/register", Register)  
-  app.post("/login", Login)  
+  
+  swaggerDocs(app, config.USER_SERVICE_PORT as number)
+  app.use("/api/v1", router)
   return app;
 };

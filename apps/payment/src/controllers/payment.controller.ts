@@ -113,6 +113,11 @@ export const makePayment = async(req: Request, res: Response) => {
       });
     }
     
+    await db.query(`
+      UPDATE payments set
+        status = 'completed'
+      WHERE id = $1 RETURNING *`,
+    [payment_id]);
     res.status(200).json({
       message: "Your payment has been processed successfully."
     });

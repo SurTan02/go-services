@@ -20,12 +20,12 @@ export const Login = async (req: Request, res: Response) => {
       // Compare provided password with hashed password in database
       const validPassword = await bcrypt.compare(password, users.rows[0].password);
       if (!validPassword) {
-          return res.status(401).send({
-              message: "Invalid credential"
-          });
+        return res.status(401).send({
+          message: "Invalid credential"
+        });
       }
       
-      const token = generateJWT(users.rows[0].name, email, users.rows[0].id)
+      const token = generateJWT(users.rows[0])
 
       res.status(201).json({
         message: 'User Login successfully',
@@ -51,10 +51,10 @@ export const Register = async(req: Request, res: Response) => {
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      const { rows } = await db.query('INSERT INTO users(name, password, email, phone_number) VALUES ($1, $2, $3, $4) RETURNING id', 
+      const { rows } = await db.query('INSERT INTO users(name, password, email, phone_number) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role', 
         [name, hashedPassword, email, phone_number])
       
-      const token = generateJWT(name, email, rows[0].id)
+      const token = generateJWT(rows[0])
 
       res.status(201).json({
         message: 'User registered successfully',

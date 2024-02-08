@@ -7,7 +7,7 @@ export const fetchFoods = async(req: Request, res: Response) => {
     const foods = await db.query(`SELECT * FROM foods`);
     res.status(200).json({
       "message": "Success",
-      "data": foods.rows
+      "data": foods.rows as Food[]
     });
   } catch (error) {
     console.error("Error fetching foods", error);
@@ -59,7 +59,7 @@ export const updateFood = async(req: Request, res: Response) => {
           description = COALESCE($2, description),
           price = COALESCE($3, price),
           image = COALESCE($4, image),
-          restaurant_id = COALESCE($5, image)
+          restaurant_id = COALESCE($5, restaurant_id)
       WHERE id = $6 RETURNING *`,
       [name, description, price, image, restaurant_id, food_id]);
       

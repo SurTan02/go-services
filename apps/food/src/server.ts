@@ -3,6 +3,8 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import { router } from "./routes/routes";
+import swaggerDocs from "@repo/middlewares/swagger";
+import { config } from "@repo/middlewares/config";
 
 export const createServer = () => {
   const app = express();
@@ -15,6 +17,8 @@ export const createServer = () => {
     .get("/healthz", (req, res) => {
       return res.json({ ok: true });
     })
-    .use(router);
+    .use("/api/v1/", router);
+  
+  swaggerDocs(app, config.FOOD_SERVICE_PORT as number)
   return app;
 };
